@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}深蓝GAE图片分享{% endblock %}
+{% block main %}
+<h2>
+<a href="/">图片列表</a>  
+<a href="/admin/upload/" title="上传图片">上传图片</a>
+ <a href="/admin/upload2/" title="上传图片">批量上传图片</a>
+ <a href="/admin/upload3/" title="Upload">保存网络图片</a>
+</h2>
+<div id="showtag">
+<fieldset>
+<legend>Tag列表</legend>
+{% for t in tags%}
+<a href="/tag/{{t.tagName}}" title="数量：{{t.useCount}}" >{{t.tagName}}</>
+{% endfor%}
+</fieldset>
+</div>
+<ul id="album">
+	{% for image in images %}
+	<li><a href="/show/{{image.id}}/" target=_black>
+	<img src="/image/{{image.id}}/" alt="{{image.name}}" /></a></li>
+	{% endfor %}
+</ul>
+<h2 id="page">{% if prev %}<a href="{{prev}}">上一页</a>{% endif%}  {%if next%}<a href="{{next}}">下一页</a>{% endif %}</h2>
+{% endblock %}
+</body>
+</html>

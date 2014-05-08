@@ -1,0 +1,79 @@
+<!DOCTYPE html  PUBLIC  "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+      上传文件
+    </title>
+    <link href="/static/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/static/main.js">
+    </script>
+  </head>
+  <body>
+    <h2>
+      <a href="/">
+        图片列表
+      </a>
+      <a href="/admin/upload/" title="上传图片">
+        上传图片
+      </a>
+      <a href="/admin/upload2/" title="上传图片">
+        批量上传图片
+      </a>
+      <a href="/admin/upload3/" title="Upload">
+        保存网络图片
+      </a>
+    </h2>
+
+    <div id="uploadpanle">
+      <h2>
+        上传图片
+      </h2>
+      <p>
+        选择图片路径并点击“上传”按钮
+      </p>
+      <form id="upload_form" action="/admin/upload3/" enctype="multipart/form-data" method="post">
+        <table>
+          <tr>
+            <td>
+              FileUrl:
+            </td>
+            <td>
+              <input type="text" name="imageUrl" id="imageUrl" style="width:500px" />
+            </td>
+          </tr>
+          <tr>
+          	<td>FileName:</td>
+          	<td><input type="text" name="fileName" id="fileName" style="width:300px" /> </td>
+          </tr>
+         
+          <tr>
+            <td>
+              Tag:
+            </td>
+            <td>
+              <input type="text" name="txbTag" id="txbTag" style="width:500px" />
+              <select onchange="if(this.options[this.selectedIndex].value){document.getElementById('txbTag').value+= (this.options[this.selectedIndex].value)+','}">
+              	<option value="">--Select--</option>
+              	{% for t in tags%}
+				<option value="{{t.tagName}}">{{t.tagName}}</option>
+				{% endfor%}
+              </select>
+            </td>
+          </tr>
+        </table>
+        <div>
+          <input type="submit" value="保存" />
+        </div>
+      </form>
+      <h5>
+        上传说明
+      </h5>
+      <ul>
+        <li>
+        图片小于1M,Tag使用半角逗号“,”分隔
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

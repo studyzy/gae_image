@@ -1,0 +1,20 @@
+﻿{% extends "base.html" %}
+{% block title %}{{tag}}-深蓝GAE图片分享{% endblock %}
+{% block main %}
+<h2>
+<a href="/">图片列表</a>  
+<a href="/admin/upload/" title="上传图片">上传图片</a>
+ <a href="/admin/upload2/" title="上传图片">批量上传图片</a>
+ <a href="/admin/upload3/" title="Upload">保存网络图片</a>
+</h2>
+<h2>{{tag}}</h2>
+<ul id="album">
+	{% for image in images %}
+	<li><a href="/show/{{image.id}}/">
+	<img src="/image/{{image.id}}/"/></a></li>
+	{% endfor %}
+</ul>
+
+{% endblock %}
+</body>
+</html>
