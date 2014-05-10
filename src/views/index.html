@@ -6,6 +6,7 @@
 <a href="/admin/upload/" title="上传图片">上传图片</a>
  <a href="/admin/upload2/" title="上传图片">批量上传图片</a>
  <a href="/admin/upload3/" title="Upload">保存网络图片</a>
+  <a href="/file" title="Upload">管理大文件</a>
 </h2>
 <div id="showtag">
 <fieldset>
@@ -17,8 +18,16 @@
 </div>
 <ul id="album">
 	{% for image in images %}
-	<li><a href="/show/{{image.id}}/" target=_black>
-	<img src="/image/{{image.id}}/" alt="{{image.name}}" /></a></li>
+	<li>
+    {% if image.iswebm %}
+<video controls="" loop="" autoplay="0" class="expandedWebm" src="/image/{{image.id}}/?.webm" style="max-width: 1299px;"></video>
+
+{% else %}
+    <a href="/show/{{image.id}}/" target=_black>
+	<img src="/image/{{image.id}}/" alt="{{image.name}}" />
+    </a>
+    {% endif %}
+    </li>
 	{% endfor %}
 </ul>
 <h2 id="page">{% if prev %}<a href="{{prev}}">上一页</a>{% endif%}  {%if next%}<a href="{{next}}">下一页</a>{% endif %}</h2>

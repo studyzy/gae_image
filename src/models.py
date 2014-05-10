@@ -15,6 +15,7 @@ class Images(db.Model):
 
     bf = db.BlobProperty() #binary file
     
+    iswebm=False
     def put(self):
         super(Images,self).put()
         

@@ -131,7 +131,7 @@ class GaeFile():
 		file = db.get(key)
 		self.gfDir.FileList.append(key)
 		self.gfDir.put()
-		
+		return key.id()
 	
 def main():		
 	pass

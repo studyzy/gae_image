@@ -7,6 +7,7 @@ from google.appengine.api import images
 from getimageinfo import getImageInfo
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
+from gaefile import *
 
 def addImage(name, mime,description,tag,bf):
     'Add Image'
@@ -34,6 +35,7 @@ def resizeImage(id,size="image"):
     image=getImage(id)
     if not image:return None
     if size=="image":return image
+    if image.width==-1:return image
     img=images.Image(image.bf)
     img.resize(width=240, height=240)
     img.im_feeling_lucky()
@@ -85,7 +87,36 @@ def getPageing(index,page=0):
     if index==25:
         return ("/",s%(page+1)) if page==1 else (s %(page-1),s%(page+1))
     return ("/",None) if page==1 else (s %(page-1),None)
+
 def AddImageByUrl(url,fileName,tag):
+    result = urlfetch.fetch(url)
+    if result.status_code == 200:
+        name = fileName
+        mtype = result.headers.get('Content-Type', '')
+        bits = result.content
+        gf=GaeFile()
+        gf.open(name,mtype);
+        gf.write(bits)
+        id=gf.close()
+        
+        image=Images(description="/media/?key="+str(id))
+        image.mime=result.headers.get('Content-Type', '')
+        image.filetype=image.mime
+        # if image.mime.find('image')==-1:
+            # return None
+        image.size=len(bits)
+        image.width=-1;
+        image.height=-1;
+        # image.name=fileName
+        # image.filetype,image.width,image.height=getImageInfo(image.bf)
+        image.tag=tag.split(',')
+        image.put()
+        AddTags(image.tag)
+        return image
+    else:
+        return None
+
+def AddImageByUrlBak(url,fileName,tag):
     result = urlfetch.fetch(url)
     if result.status_code == 200:
         image=Images(description=url,bf=result.content)
@@ -102,7 +133,8 @@ def AddImageByUrl(url,fileName,tag):
     else:
         return None
 
-
+        
+        
 def getAllTags():
     return Tag.all().order('-useCount')
 def AddTags(tags):

@@ -6,12 +6,19 @@
 <a href="/admin/upload/" title="上传图片">上传图片</a>
  <a href="/admin/upload2/" title="上传图片">批量上传图片</a>
  <a href="/admin/upload3/" title="Upload">保存网络图片</a>
+   <a href="/file" title="Upload">管理大文件</a>
+
 </h2>
 
 {% if image %}
 <div id="showimg">
+{% if webm %}
+<video controls="" loop="10" autoplay="" class="expandedWebm" src="/image/{{image.id}}/?.webm" style="max-width: 1299px;"></video>
+
+{% else %}
 <a href="/image/{{image.id}}/" target="_black">
 <img  src="/image/{{image.id}}/" alt="{{image.name}}" /></a>
+{% endif %}
 <br />
 <dl>
 <dt><strong>图片信息</strong></dt>
